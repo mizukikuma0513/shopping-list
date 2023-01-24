@@ -1,7 +1,12 @@
-<h1>Toppages#index</h1>
-<div class="bg-secondary p-3 p-sm-5 my-4 rounded">
-  <div class="text-center text-white">
-    <h1>Welcome to the Microposts</h1>
-    <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary' %>
+<% if logged_in? %>
+  <p>ログイン完了ユーザ: <%= current_user.name %></p>
+<% else %>
+  <div class="bg-secondary p-3 p-sm-5 my-4 rounded">
+    <div class="text-center text-white">
+      <h1>Welcome to the Shopping-List !</h1>
+      <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary' %>
+      <h3>You have acount?</h3>
+      <%= link_to 'Log in now!', login_path, class: 'btn btn-lg btn-primary' %>
+    </div>
   </div>
-</div>
+<% end %>
