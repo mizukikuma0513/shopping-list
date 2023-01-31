@@ -14,7 +14,7 @@
     <tr class="text-center">
       <th><%= task.id %></th>
       <th><%= task.content %></th>
-      <td><%= link_to task.shop.name, items_shop_path(id: task.shop.id) %></td>
+      <td><%= link_to task.shop.name, items_shop_path(@shops) %></td>
       <td><%= task.number %></td>
       <td><%= link_to "編集する", edit_task_path(task) %>
       <td><%= link_to "Delete", task, method: :delete, data: { confirm: "本当に削除しますか?" }, class: 'btn btn-danger btn-sm' %></td>

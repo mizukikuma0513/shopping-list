@@ -1,0 +1,32 @@
+<%= form_with(model: task) do |f| %>
+　<% if task.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+        <% task.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="mb-3">
+    <%= f.label :name, 'ショップ名' %>
+    <%= f.collection_select :shop_id, @shops, :id, :name, include_blank: "選択して下さい" %>
+  </div>
+  
+  <div class="mb-3">
+    <%= f.label :number, '個数' %>
+    <%= f.text_field :number %>
+  </div>
+  
+  <div class="mb-3">
+    <%= f.label :content, 'タスク' %>
+    <%= f.text_field :content %>
+  </div>
+  
+  
+  <%= f.submit '投稿' %>
+  
+  
+  
+<% end %>

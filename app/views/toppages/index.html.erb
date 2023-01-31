@@ -1,17 +1,16 @@
 <% if logged_in? %>
   <div class="row">
     <aside class="col-sm-4">
-      <%= form_with(model: @task) do |f| %>
-        <div class="mb-3">
-          <%= f.text_area :content, class: 'form-control', rows: 5 %>
-        </div>
-        <%= f.submit 'Post', class: 'btn btn-primary w-100' %>
-        <div class="mb-3">
-          
-        </div>
-      <% end %>
+      <%= render 'tasks/form', task: @task %>
     </aside>
     <div class="col-sm-8">
+      <ul class="nav nav-tabs nav-justified mb-3">
+        <li class="nav-item"><a href="<%= tasks_path %>" class="nav-link <%= 'active' if current_page?(tasks_path) %>">タスク一覧 <span class="badge bg-secondary"><%= @count_tasks %></span></a></li>
+        <li class="nav-item">お気に入りショップ一覧 <span class="badge bg-secondary"></span></a></li>
+        <% @favorite_shops.each do |shop| %>
+          <li class="nav-item"><%=  shop.name %> <span class="badge bg-secondary"></span></a></li>
+        <% end %>
+      </ul>
       <%= render 'tasks/tasks', tasks: @tasks %>
     </div>
   </div>

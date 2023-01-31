@@ -1,0 +1,39 @@
+<div class="mb-4 row">
+  <h1>新しくショップを登録</h1>
+</div>
+
+<div class="mb-4 row">
+  <%= form_with(model: @shop) do |f| %>
+    <%= f.label :name, 'ショップ名' %>
+    <%= f.text_field :name %>
+      
+    <%= f.submit '登録' %>
+  <% end %>
+</div>
+
+<div class="mb-2 row">
+  <h1>これまでに登録されたショップ一覧</h1>
+</div>
+
+<table class="table table-bordered table-hover" >
+  <thead>
+    <tr class="text-center">
+      <th>#</th>
+      <th>ショップ名</th>
+      <th>お気に入り</th>
+      <th>編集する</th>
+      <th>削除する</th>
+    </tr>
+  </thead>
+  <tbody class="text-center">
+  <% @shops.each do |shop| %>
+    <tr>
+      <th><%= shop.id %></th>
+      <td><%= link_to shop.name, items_shop_path(id: shop.id)%></td>
+      <td><%= render "favorites/favorite_button", shop: shop %></td>
+      <td><%= link_to "編集する", edit_shop_path(shop) %>
+      <td><%= link_to "Delete", shop, method: :delete, data: { confirm: "本当に削除しますか?" }, class: 'btn btn-danger btn-sm' %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

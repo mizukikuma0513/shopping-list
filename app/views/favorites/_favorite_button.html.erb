@@ -1,0 +1,13 @@
+<% if current_user.favorite?(shop) %>
+  <%= form_with(model: current_user.favorites.find_by(shop_id: shop.id), method: :delete) do |f| %>
+    <%= hidden_field_tag :shop_id, shop.id  %>
+    <%= f.submit 'Unfavorite', class: 'btn btn-danger btn-sm' %>
+  <% end %>
+<% else %>
+  <%= form_with(model: current_user.favorites.build) do |f| %>
+    <%= hidden_field_tag :shop_id, shop.id %>
+    <%= f.submit 'Favorite', class: 'btn btn-warning btn-sm' %>
+  <% end %>
+<% end %>
+
+

@@ -1,0 +1,17 @@
+<div class="mb-5 row">
+  <h1>ショップ名編集ページ</h1>
+</div>
+
+<div class="mb-5 row">
+  <%= form_with(model: @shop) do |f| %>
+  
+    <%= f.label :name, 'ショップ名' %>
+    <%= f.text_field :name %>
+  
+    <%= f.submit '登録' %>
+
+  <% end %>
+</div>
+
+
+<%= link_to '一覧に戻る', shops_path %>

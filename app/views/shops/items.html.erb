@@ -1,0 +1,24 @@
+<h2><%= @shop.name %>のタスク一覧</h2>
+
+<table class="table table-bordered table-hover" >
+  <thead>
+    <tr class="text-center">
+      <th>#</th>
+      <th>買うもの</th>
+      <th>個数</th>
+      <th>編集する</th>
+      <th>削除する</th>
+    </tr>
+  </thead>
+  <tbody class="text-center">
+    <% @shop.tasks.each do |task| %>
+    <tr>
+      <th><%= task.id %></th>
+      <td><%= task.content %></td>
+      <td><%= task.number %></td>
+      <td><%= link_to "編集する", edit_shop_path(@shop) %>
+      <td><%= link_to "Delete", @shop, method: :delete, data: { confirm: "本当に削除しますか?" }, class: 'btn btn-danger btn-sm' %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

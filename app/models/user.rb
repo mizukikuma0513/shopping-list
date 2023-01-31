@@ -8,5 +8,22 @@ class User < ApplicationRecord
   has_secure_password
   has_many :tasks
   has_many :shops
+  
   has_many :favorites
+  has_many :likes, through: :favorites, source: :shop
+  
+  def favorite(shop)
+    self.favorites.find_or_create_by(shop_id: shop.id)
+  end
+  
+  def unfavorite(shop)
+    favorite = self.favorites.find_by(shop_id: shop.id)
+    favorite.destroy if favorite
+  end
+
+  def favorite?(shop)
+    self.likes.include?(shop)
+  end
+  
 end
+  

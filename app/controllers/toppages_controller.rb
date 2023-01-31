@@ -1,9 +1,13 @@
 class ToppagesController < ApplicationController
   def index
-    if logged_in?
-      @task = current_user.tasks.build  # form_with 用
-      #@number = current_user.tasks.build # form_with 用
-      @pagy, @tasks = pagy(current_user.tasks.order(id: :desc))
-    end
+    @task = Task.new
+    @shops = current_user.shops
+    @pagy, @tasks = pagy(current_user.tasks, items: 15)
+    @favorite_shops = current_user.likes
+  end
+  
+  private
+  def task_params
+    params.require(:task).permit(:shop_id, :number, :content)
   end
 end
