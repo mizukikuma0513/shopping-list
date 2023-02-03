@@ -19,13 +19,13 @@ Rails.application.routes.draw do
     end
   end  
   
-  resources :users do
-    member do
+  resources :toppages do
+    collection do
       get :likes
     end
   end
   
-  
+
   
 end
  

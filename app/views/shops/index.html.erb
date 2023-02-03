@@ -14,6 +14,12 @@
 <div class="mb-2 row">
   <h1>これまでに登録されたショップ一覧</h1>
 </div>
+<div class="mt-2 mb-4 row">
+ <%= form_tag({controller:"shops",action:"index"}, method: :get) do %>
+   <%= select_tag("search", options_for_select([['---並べ替え選択---', ''], ['新しい順', 'newshop'], ['古い順', 'oldshop'],['お気に入り', 'favorite']])) %>
+   <%= submit_tag '並べ替える'  %>
+ <% end %>
+</div>
 
 <table class="table table-bordered table-hover" >
   <thead>
@@ -26,9 +32,9 @@
     </tr>
   </thead>
   <tbody class="text-center">
-  <% @shops.each do |shop| %>
+  <% @shops.each_with_index do |shop, i| %>
     <tr>
-      <th><%= shop.id %></th>
+      <th><%= i+1 %></th>
       <td><%= link_to shop.name, items_shop_path(id: shop.id)%></td>
       <td><%= render "favorites/favorite_button", shop: shop %></td>
       <td><%= link_to "編集する", edit_shop_path(shop) %>
@@ -37,3 +43,4 @@
   <% end %>
   </tbody>
 </table>
+<%== pagy_bootstrap_nav(@pagy) %>

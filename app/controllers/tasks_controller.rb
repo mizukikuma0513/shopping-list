@@ -4,21 +4,21 @@ class TasksController < ApplicationController
   
   def index
     if logged_in?
-      @pagy, @tasks = pagy(current_user.tasks, items: 15)
+      @pagy, @tasks = pagy(current_user.tasks, items: 10)
       @shops = current_user.shops
+      if params[:search] == ''
+        @tasks = current_user.tasks.order(id: "DESC")
+      elsif params[:search] == 'newpost'
+        @tasks = current_user.tasks.order(id: "DESC")
+      elsif params[:search] == 'oldpost'
+        @tasks = current_user.tasks.all
+      end
     else 
       render new_sessions_url
     end
-    
   end
   
   def show
-    if logged_in?
-      @pagy, @tasks = pagy(current_user.tasks, items: 15)
-      @shops = current_user.shops
-    else 
-      render new_sessions_url
-    end
   end
   
   def new
@@ -28,7 +28,7 @@ class TasksController < ApplicationController
   
   def create
     @task = current_user.tasks.build(task_params)
-
+    
     if @task.save
       flash[:success] = 'Task が正常に投稿されました'
       redirect_to @task
@@ -48,7 +48,7 @@ class TasksController < ApplicationController
 
     if @task.update(task_params)
       flash[:success] = 'Task は正常に更新されました'
-      redirect_to @task
+      redirect_to tasks_path
     else
       flash.now[:danger] = 'Task は更新されませんでした'
       render :edit
@@ -63,6 +63,7 @@ class TasksController < ApplicationController
       redirect_to root_url
     else
       @pagy, @tasks = pagy(current_user.tasks.order(id: :desc))
+      @shops = current_user.shops
       flash.now[:danger] = '新規タスクの追加に失敗しました。'
       render 'toppages/index'
     end

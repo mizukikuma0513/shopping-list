@@ -4,7 +4,16 @@ class ShopsController < ApplicationController
   
   def index
     @shop = Shop.new
-    @shops = current_user.shops
+    @pagy, @shops = pagy(current_user.shops, items: 10)
+    if params[:search] == ''
+      @shops = current_user.shops.order(id: "DESC")
+    elsif params[:search] == 'newshop'
+      @shops = current_user.shops.order(id: "DESC")
+    elsif params[:search] == 'oldshop'
+      @shops = current_user.shops.all
+    elsif params[:search] == 'favorite'
+      @shops = current_user.likes
+    end
   end
 
   def show
@@ -22,7 +31,7 @@ class ShopsController < ApplicationController
       redirect_to shops_path
     else
       flash.now[:danger] = '新規ショップを登録できませんでした'
-      render :new
+      render :index
     end
   end
 

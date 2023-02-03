@@ -1,4 +1,6 @@
-<h2><%= @shop.name %>のタスク一覧</h2>
+<h1><%= @shop.name %>のタスク一覧</h1>
+
+<p style="text-align:right"><%= link_to '新規タスクの投稿', new_task_path %></p>
 
 <table class="table table-bordered table-hover" >
   <thead>
@@ -11,14 +13,15 @@
     </tr>
   </thead>
   <tbody class="text-center">
-    <% @shop.tasks.each do |task| %>
+    <% @shop.tasks.each_with_index do |task, i| %>
     <tr>
-      <th><%= task.id %></th>
+      <th><%= i+1 %></th>
       <td><%= task.content %></td>
       <td><%= task.number %></td>
-      <td><%= link_to "編集する", edit_shop_path(@shop) %>
+      <td><%= link_to "編集する", edit_task_path(id: task.id) %>
       <td><%= link_to "Delete", @shop, method: :delete, data: { confirm: "本当に削除しますか?" }, class: 'btn btn-danger btn-sm' %></td>
     </tr>
     <% end %>
   </tbody>
 </table>
+

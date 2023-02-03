@@ -5,10 +5,9 @@
     </aside>
     <div class="col-sm-8">
       <ul class="nav nav-tabs nav-justified mb-3">
-        <li class="nav-item"><a href="<%= tasks_path %>" class="nav-link <%= 'active' if current_page?(tasks_path) %>">タスク一覧 <span class="badge bg-secondary"><%= @count_tasks %></span></a></li>
-        <li class="nav-item">お気に入りショップ一覧 <span class="badge bg-secondary"></span></a></li>
+        <li class="nav-item"><a href="<%= root_path %>" class="nav-link <%= 'active' if current_page?(root_path) %>">タスク一覧 <span class="badge bg-secondary"><%= @count_tasks %></span></a></li>
         <% @favorite_shops.each do |shop| %>
-          <li class="nav-item"><%=  shop.name %> <span class="badge bg-secondary"></span></a></li>
+          <li class="nav-item"><a href="<%= likes_toppages_path(id: shop.id) %>" class="nav-link <%= 'active' if current_page?(likes_toppages_path(id: shop.id)) %>"><%= shop.name %><span class="badge bg-secondary"><%= shop.tasks.count %></span></a></li>
         <% end %>
       </ul>
       <%= render 'tasks/tasks', tasks: @tasks %>
@@ -18,9 +17,10 @@
   <div class="bg-secondary p-3 p-sm-5 my-4 rounded">
     <div class="text-center text-white">
       <h1>Welcome to the Shopping-List !</h1>
-      <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary' %>
-      <h2>You have acount?</h2>
-      <%= link_to 'Log in now!', login_path, class: 'btn btn-lg btn-primary' %>
+      <br>
+      <h2>アカウントをお持ちの方は<%= link_to 'ログインページ', login_path %>へ</h2>
+      <br>
+      <P>ユーザー登録がお済みでない方は、<%= link_to 'こちら', signup_path %>で新規登録を行ってください。</P>
     </div>
   </div>
 <% end %>

@@ -24,11 +24,6 @@ class UsersController < ApplicationController
     end
   end
   
-  def likes
-    @user = User.find(params[:id])
-    @shop = current_user.shops.find_by(id: params[:id])
-  end
-  
   private
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)

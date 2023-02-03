@@ -10,9 +10,9 @@
     </tr>
   </thead>
   <tbody>
-  <% @tasks.each do |task| %>
+  <% @tasks.each_with_index do |task, i| %>
     <tr class="text-center">
-      <th><%= task.id %></th>
+      <th><%= i+1 %></th>
       <th><%= task.content %></th>
       <td><%= link_to task.shop.name, items_shop_path(id: task.shop.id) %></td>
       <td><%= task.number %></td>

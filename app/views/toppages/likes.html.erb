@@ -1,0 +1,41 @@
+<div class="row">
+  <aside class="col-sm-4">
+    <%= render 'tasks/form', task: @task %>
+  </aside>
+
+
+<div class="col-sm-8">
+  <ul class="nav nav-tabs nav-justified mb-3">
+    <li class="nav-item"><a href="<%= root_path %>" class="nav-link <%= 'active' if current_page?(root_path) %>">タスク一覧 <span class="badge bg-secondary"><%= @count_tasks %></span></a></li>
+    <% @favorite_shops.each do |shop| %>
+      <li class="nav-item"><a href="<%= likes_toppages_path(id: shop.id) %>" class="nav-link <%= 'active' if current_page?(likes_toppages_path(id: shop.id)) %>"><%= shop.name %><span class="badge bg-secondary"><%= shop.tasks.count %></span></a></li>
+    <% end %>
+  </ul>
+  
+  <table class="table table-bordered table-hover" >
+    <thead>
+      <tr class="text-center">
+        <th>#</th>
+        <th>買うもの</th>
+        <th>個数</th>
+        <th>編集する</th>
+        <th>削除する</th>
+      </tr>
+    </thead>
+    <tbody class="text-center">
+      <% @shop.tasks.each_with_index do |task, i| %>
+      <tr>
+        <th><%= i+1 %></th>
+        <td><%= task.content %></td>
+        <td><%= task.number %></td>
+        <td><%= link_to "編集する", edit_task_path(id: task.id) %>
+        <td><%= link_to "Delete", @shop, method: :delete, data: { confirm: "本当に削除しますか?" }, class: 'btn btn-danger btn-sm' %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%== pagy_bootstrap_nav(@pagy) %>
+</div>
+
+
+

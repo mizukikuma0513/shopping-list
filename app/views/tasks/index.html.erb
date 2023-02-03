@@ -1,5 +1,12 @@
 <h1>タスク一覧</h1>
 
+<div class="mt-3 row">
+ <%= form_tag({controller:"tasks",action:"index"}, method: :get) do %>
+   <%= select_tag("search", options_for_select([['---並べ替え選択---', ''], ['最新の投稿', 'newpost'], ['古い投稿', 'oldpost']])) %>
+   <%= submit_tag '並べ替える'  %>
+ <% end %>
+</div>
+
 <p style="text-align:right"><%= link_to '新規タスクの投稿', new_task_path %></p>
 
 <table class="table table-bordered table-hover" >
@@ -14,10 +21,10 @@
     </tr>
   </thead>
   <tbody>
-  <% @tasks.each do |task| %>
+  <% @tasks.each_with_index do |task, i| %>
   <%# shop.tasks.each do |task| %>
     <tr class="text-center">
-      <th><%= task.id %></th>
+      <th><%= i+1 %></th>
       <td><%= task.content %></td>
       <td><%= link_to task.shop.name, items_shop_path(id: task.shop.id) %></td>
       <td><%= task.number %></td>
