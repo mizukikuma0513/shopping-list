@@ -61,7 +61,16 @@ class TasksController < ApplicationController
     else
       flash.now[:danger] = 'タスクは更新されませんでした'
       @shops = current_user.shops
-      render :edit
+       @pagy, @tasks = pagy(current_user.tasks, items: 10)
+      @shops = current_user.shops
+      if params[:search] == ''
+        @tasks = current_user.tasks.order(id: "DESC")
+      elsif params[:search] == 'newpost'
+        @tasks = current_user.tasks.order(id: "DESC")
+      elsif params[:search] == 'oldpost'
+        @tasks = current_user.tasks.all
+      end
+      render :index
     end
   end
 
