@@ -31,6 +31,19 @@ class ShopsController < ApplicationController
       redirect_to shops_path
     else
       flash.now[:danger] = '新規ショップを登録できませんでした'
+      @favorite_shops = current_user.likes
+      @shops = current_user.shops
+      @shop = Shop.new
+      @pagy, @shops = pagy(current_user.shops, items: 5)
+      if params[:search] == ''
+        @shops = current_user.shops.order(id: "DESC")
+      elsif params[:search] == 'newshop'
+        @shops = current_user.shops.order(id: "DESC")
+      elsif params[:search] == 'oldshop'
+        @shops = current_user.shops.all
+      elsif params[:search] == 'favorite'
+        @shops = current_user.likes
+      end
       render :index
     end
   end
@@ -42,10 +55,11 @@ class ShopsController < ApplicationController
   def update
     @shop = Shop.find(params[:id])
     if @shop.update(shop_params)
-      flash[:success] = 'ショップ名が更新されました'
+      flash[:success] = 'ショップ名を更新しました'
       redirect_to shops_path
     else
       flash.now[:danger] = 'ショップ名を更新できませんでした'
+      @shop = Shop.find(params[:id])
       render :edit
     end
   end
@@ -53,7 +67,7 @@ class ShopsController < ApplicationController
   def destroy
     @shop = Shop.find(params[:id])
     @shop.destroy
-    flash[:success] = 'ショップ名が削除されました'
+    flash[:success] = 'ショップ名を削除しました'
     redirect_to shops_url
   end
   

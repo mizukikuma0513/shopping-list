@@ -4,6 +4,7 @@
 
 <div class="mb-4 row">
   <%= form_with(model: @shop) do |f| %>
+    <%= render 'layouts/error_messages', model: f.object %>
     <%= f.label :name, 'ショップ名' %>
     <%= f.text_field :name %>
       

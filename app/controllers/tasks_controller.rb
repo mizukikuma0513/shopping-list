@@ -28,44 +28,40 @@ class TasksController < ApplicationController
   
   def create
     @task = current_user.tasks.build(task_params)
-    
-    if @task.save
-      flash[:success] = 'Task が正常に投稿されました'
-      redirect_to @task
-    else
-      flash.now[:danger] = 'Task が投稿されませんでした'
-      render :new
-    end
-  end
-  
-  def edit
-    @task = Task.find(params[:id])
-    @shops = current_user.shops
-  end
-
-  def update
-    @task = Task.find(params[:id])
-
-    if @task.update(task_params)
-      flash[:success] = 'Task は正常に更新されました'
-      redirect_to tasks_path
-    else
-      flash.now[:danger] = 'Task は更新されませんでした'
-      render :edit
-    end
-  end
-  
-  
-  def create
-    @task = current_user.tasks.build(task_params)
     if @task.save
       flash[:success] = '新たにタスクを追加しました。'
       redirect_to root_url
     else
       @pagy, @tasks = pagy(current_user.tasks.order(id: :desc))
       @shops = current_user.shops
+      @favorite_shops = current_user.likes
       flash.now[:danger] = '新規タスクの追加に失敗しました。'
       render 'toppages/index'
+    end
+  end
+  
+  def edit
+    @task = Task.find(params[:id])
+    @shops = current_user.shops
+    if params[:search] == ''
+        @tasks = current_user.tasks.order(id: "DESC")
+      elsif params[:search] == 'newpost'
+        @tasks = current_user.tasks.order(id: "DESC")
+      elsif params[:search] == 'oldpost'
+        @tasks = current_user.tasks.all
+      end
+  end
+
+  def update
+    @task = Task.find(params[:id])
+
+    if @task.update(task_params)
+      flash[:success] = 'タスクが正常に更新されました'
+      redirect_to tasks_path
+    else
+      flash.now[:danger] = 'タスクは更新されませんでした'
+      @shops = current_user.shops
+      render :edit
     end
   end
 
