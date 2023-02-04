@@ -44,12 +44,12 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @shops = current_user.shops
     if params[:search] == ''
-        @tasks = current_user.tasks.order(id: "DESC")
-      elsif params[:search] == 'newpost'
-        @tasks = current_user.tasks.order(id: "DESC")
-      elsif params[:search] == 'oldpost'
-        @tasks = current_user.tasks.all
-      end
+      @tasks = current_user.tasks.order(id: "DESC")
+    elsif params[:search] == 'newpost'
+      @tasks = current_user.tasks.order(id: "DESC")
+    elsif params[:search] == 'oldpost'
+      @tasks = current_user.tasks.all
+    end
   end
 
   def update
